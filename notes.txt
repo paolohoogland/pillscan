@@ -1,0 +1,147 @@
+python -m venv venv      
+source venv/bin/activate 
+pip install tensorflow keras scikit-learn pandas numpy matplotlib pillow
+pip3 install torch torchvision tqdm
+
+... c_20_mg.doc  
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/covercard_plus_10_mg_2_5_mg_5_mg.doc  
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/coverex_4_mg.doc  
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/diclopram_75-�mg_20-�mg.doc  
+/Users/paolohoogland/Desktop/dev/pillscan/data/train/pills_raw/patient_information_leaflet_doc/patient_information_leaflet_doc/diclopram_75-�mg_20-�mg.doc:  write error (disk full?).  Continue? (y/n/^C) y
+fchmod (file attributes) error: Bad file descriptor
+ (warning) cannot set modif./access times
+          No such file or directory bad CRC a4187f5a  (should be ab8ec4f1)
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/donalgin_250_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/dorithricin_mentol.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/doxazosin_hexal_4_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/doxazosin_sandoz_uro_4_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/dulodet_60_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/dulsevia_60_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/enterol_250_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/escitil_10_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/favipiravir_meditop_200_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/frontin_0_25_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/frontin_0_5_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/furon_40_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/ibumax_400_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/indastad_1_5_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/kalium_r.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/ketodex_25_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/l_thyroxin_henning_50_mikrogramm.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/laresin_10_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/letrox_50_mikrogramm.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/lordestin_5_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/mebucain_mint_2_mg_1_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/merckformin_xr_1000_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/metothyrin_10_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/mezym_forte_10_000_egyseg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/milgamma.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/milgamma_n.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/milurit_300_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/naprosyn_250_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/narva_sr_1_5_mg_retard.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/nebivolol_sandoz_5_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/neo_citran.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/neo_ferro_folgamma_114_mg_0_8_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/no_spa_40_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/noclaud_50_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/nolpaza_20_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/nootropil_1200_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/normodipine_5_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/nurofen_forte_400_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/olicard_60_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/panangin_158_mg_140_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/pantoprazol_sandoz_40_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/provera_5_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/quamatel_40_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/reasec_0_025_mg_2_5_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/revicet_akut_10_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/rhinathiol_tusso_100_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/rubophen_500_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/salazopyrin_en_500_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/sedatif_pc.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/semicillin_500_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/sicor_10_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/sinupret_forte.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/sirdalud_4_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/strepfen_8_75_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/strepsils.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/syncumar_mite_1_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/teva_ambrobene_30_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/teva_enterobene_2_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/theospirex_150_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/tritace_5_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/tritace_hct_5_mg_25_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/urzinol.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/verospiron_25_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/vitamin_d3_fresenius_1000_ne.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/voltaren_dolo_rapid_25_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/xeter_20_mg.doc   (warning) cannot set modif./access times
+          No such file or directory
+  inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/zadex_60_mg.doc   (warning) cannot set modif./access times
+          No such file or directory

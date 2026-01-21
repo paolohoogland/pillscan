@@ -79,3 +79,76 @@ print(f"Model: ResNet50 with {NUM_CLASSES} output classes")
 # loss function and optimizer
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.fc.parameters(), lr=LEARNING_RATE)  # fc layer
+
+def train_one_epoch(model, loader, criterion, optimizer, device):
+    model.train()
+    running_loss = 0.0 # loss accumulator
+    correct = 0
+    total = 0
+
+    for images, labels in tqdm(loader, desc="Training"): # progress bar
+        images, labels = images.to(device), labels.to(device)
+
+        # zero gradients for each batch
+        optimizer.zero_grad()
+        # predict
+        outputs = model(images)
+        # compute loss
+        loss = criterion(outputs, labels)
+        # backpropagate
+        loss.backward()
+        # update weights
+        optimizer.step()
+
+        running_loss += loss.item() * images.size(0)
+        _, predicted = outputs.max(1) # discard max values, keep indices (predicted classes)
+        total += labels.size(0)
+        correct += predicted.eq(labels).sum().item() # count correct predictions
+
+    epoch_loss = running_loss / total
+    epoch_acc = correct / total
+    return epoch_loss, epoch_acc
+
+def validate(model, loader, criterion, device):
+    model.eval()
+    running_loss = 0.0
+    correct = 0
+    total = 0
+
+    with torch.no_grad(): 
+        for images, labels in tqdm(loader, desc="Validating"):
+            images, labels = images.to(device), labels.to(device)
+
+            # forward pass
+            outputs = model(images) 
+            loss = criterion(outputs, labels)
+
+            running_loss += loss.item() * images.size(0)
+            _, predicted = outputs.max(1)
+            total += labels.size(0)
+            correct += predicted.eq(labels).sum().item()
+
+    epoch_loss = running_loss / total
+    epoch_acc = correct / total
+    return epoch_loss, epoch_acc
+
+best_val_acc = 0.0
+for epoch in range(NUM_EPOCHS):
+    print(f"Epoch {epoch+1}/{NUM_EPOCHS}")
+
+    train_loss, train_acc = train_one_epoch(model, train_loader, criterion, optimizer, DEVICE)
+    val_loss, val_acc = validate(model, val_loader, criterion, DEVICE)
+
+    print(f"Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}")
+    print(f"Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}")
+
+    # save the best model
+    if val_acc > best_val_acc:
+        best_val_acc = val_acc
+        torch.save(model.state_dict(), "best_model.pth")
+        print("Best model saved.")
+print("Training complete.")
+
+model.load_state_dict(torch.load("best_model.pth"), map_location=DEVICE) # map to device because of mps
+test_loss, test_acc = validate(model, test_loader, criterion, DEVICE)
+print(f"Test Loss: {test_loss:.4f}, Test Acc: {test_acc:.4f}")
