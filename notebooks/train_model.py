@@ -14,13 +14,16 @@ from tqdm import tqdm # progress bar
 
 from pill_dataset import PillDataset 
 
+# matplotlib inline
+import matplotlib.pyplot as plt
+
 DATA_DIR = Path("../data.nosync/pills_raw/ogyeiv2")
 TRAIN_DIR = DATA_DIR / "train" / "images"
 VAL_DIR = DATA_DIR / "val" / "images"
 TEST_DIR = DATA_DIR / "test" / "images"
 
 BATCH_SIZE = 32
-NUM_EPOCHS = 10
+NUM_EPOCHS = 5
 LEARNING_RATE = 0.001
 NUM_CLASSES = 112 # dataset specific
 
@@ -133,6 +136,11 @@ def validate(model, loader, criterion, device):
     return epoch_loss, epoch_acc
 
 best_val_acc = 0.0
+train_loss_values = []
+val_loss_values = []
+train_acc_values = []
+val_acc_values = []
+
 for epoch in range(NUM_EPOCHS):
     print(f"Epoch {epoch+1}/{NUM_EPOCHS}")
 
@@ -142,6 +150,11 @@ for epoch in range(NUM_EPOCHS):
     print(f"Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}")
     print(f"Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}")
 
+    train_loss_values.append(train_loss)
+    val_loss_values.append(val_loss)
+    train_acc_values.append(train_acc)
+    val_acc_values.append(val_acc)
+
     # save the best model
     if val_acc > best_val_acc:
         best_val_acc = val_acc
@@ -149,6 +162,26 @@ for epoch in range(NUM_EPOCHS):
         print("Best model saved.")
 print("Training complete.")
 
-model.load_state_dict(torch.load("best_model.pth"), map_location=DEVICE) # map to device because of mps
+model.load_state_dict(torch.load("best_model.pth", map_location=DEVICE))
 test_loss, test_acc = validate(model, test_loader, criterion, DEVICE)
 print(f"Test Loss: {test_loss:.4f}, Test Acc: {test_acc:.4f}")
+
+# loss
+plt.figure(figsize=(12, 5))
+plt.subplot(1, 2, 1)
+plt.plot(range(1, NUM_EPOCHS + 1), train_loss_values, label='Train Loss')
+plt.plot(range(1, NUM_EPOCHS + 1), val_loss_values, label='Val Loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.title('Training and Validation Loss')
+plt.legend()
+
+# accuracy
+plt.subplot(1, 2, 2)
+plt.plot(range(1, NUM_EPOCHS + 1), train_acc_values, label='Train Acc')
+plt.plot(range(1, NUM_EPOCHS + 1), val_acc_values, label='Val Acc')
+plt.xlabel('Epochs')
+plt.ylabel('Accuracy')
+plt.title('Training and Validation Accuracy')
+plt.legend()
+plt.show()

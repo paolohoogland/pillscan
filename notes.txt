@@ -145,3 +145,31 @@ fchmod (file attributes) error: Bad file descriptor
           No such file or directory
   inflating: ./pills_raw//patient_information_leaflet_doc/patient_information_leaflet_doc/zadex_60_mg.doc   (warning) cannot set modif./access times
           No such file or directory
+
+v0
+Epoch 10/10
+Training: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 98/98 [02:17<00:00,  1.41s/it]
+Validating: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 21/21 [00:28<00:00,  1.36s/it]
+Train Loss: 1.9651, Train Acc: 0.5210
+Val Loss: 1.7425, Val Acc: 0.5402
+Training complete.
+
+v1
+Epoch 15/15
+Training: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 98/98 [02:16<00:00,  1.39s/it]
+Validating: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 21/21 [00:28<00:00,  1.35s/it]
+Train Loss: 1.6960, Train Acc: 0.5571
+Val Loss: 1.4246, Val Acc: 0.6280
+Training complete.
+Validating: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 21/21 [00:28<00:00,  1.36s/it]
+Test Loss: 1.6060, Test Acc: 0.5938
+
+
+Val accuracy > Train accuracy means no overfitting (actually underfitting)
+switch
+
+v2
+just did 25 epochs, 
+pip install matplotlib
+
+v3 added matplotlib 
