@@ -1,0 +1,1 @@
+pip install tensorflow keras scikit-learn pandas numpy matplotlib pillow torch torchvision tqdm matplotlib
