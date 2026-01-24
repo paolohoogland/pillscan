@@ -22,15 +22,16 @@ TRAIN_DIR = DATA_DIR / "train" / "images"
 VAL_DIR = DATA_DIR / "val" / "images"
 TEST_DIR = DATA_DIR / "test" / "images"
 
-BATCH_SIZE = 32
-NUM_EPOCHS = 5
+BATCH_SIZE = 128  # optimal for RTX 4070 Super with this dataset
+NUM_EPOCHS = 25
 LEARNING_RATE = 0.001
 NUM_CLASSES = 112 # dataset specific
 
 IMG_SIZE = 224 # resnet standard input size
 
 # mps if available, else cpu
-DEVICE = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+# DEVICE = torch.device("mps" if torch.backends.mps.is_available() else "cpu") # for mac M2
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # for nvidia gpus
 print(f"Using device: {DEVICE}")
 
 # for training, we need to resize, augment, normalize
@@ -59,9 +60,9 @@ train_dataset = PillDataset(TRAIN_DIR, transform=train_transforms)
 val_dataset = PillDataset(VAL_DIR, transform=val_transforms)
 test_dataset = PillDataset(TEST_DIR, transform=val_transforms)
 
-train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True)
-val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False)
-test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False)
+train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=10, pin_memory=True, prefetch_factor=4, persistent_workers=True) # workers and pin_memory for performance
+val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=10, pin_memory=True, prefetch_factor=4, persistent_workers=True)
+test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=10, pin_memory=True, prefetch_factor=4, persistent_workers=True)
 
 print(f"Train: {len(train_dataset)} | Val: {len(val_dataset)} | Test: {len(test_dataset)}")
 
