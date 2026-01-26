@@ -56,9 +56,9 @@ val_transforms = transforms.Compose([
     )
 ])
 
-train_dataset = PillDataset(TRAIN_DIR, transform=train_transforms)
-val_dataset = PillDataset(VAL_DIR, transform=val_transforms)
-test_dataset = PillDataset(TEST_DIR, transform=val_transforms)
+train_dataset = PillDataset(TRAIN_DIR, transform=train_transforms, cache=False)
+val_dataset = PillDataset(VAL_DIR, transform=val_transforms, cache=False)
+test_dataset = PillDataset(TEST_DIR, transform=val_transforms, cache=False)
 
 train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=10, pin_memory=True, prefetch_factor=4, persistent_workers=True) # workers and pin_memory for performance
 val_loader = DataLoader(val_dataset, batch_size=BATCH_SIZE, shuffle=False, num_workers=10, pin_memory=True, prefetch_factor=4, persistent_workers=True)
@@ -185,4 +185,6 @@ plt.xlabel('Epochs')
 plt.ylabel('Accuracy')
 plt.title('Training and Validation Accuracy')
 plt.legend()
-plt.show()
+plt.tight_layout()
+plt.savefig("training_curves.png", dpi=150)
+print("Training curves saved to training_curves.png")

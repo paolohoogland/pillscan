@@ -6,15 +6,26 @@ from torch.utils.data import Dataset
 
 
 class PillDataset(Dataset):
-    def __init__(self, image_dir, transform=None):
+    def __init__(self, image_dir, transform=None, cache=False):
         self.image_dir = Path(image_dir)
         self.transform = transform
+        self.cache = cache # cache images in memory
 
         self.image_paths = list(self.image_dir.glob("*.jpg")) # all jpgs
         self.classes = sorted(set(self._get_class_name(p) for p in self.image_paths))
         self.class_to_idx = {cls: idx for idx, cls in enumerate(self.classes)} # mapping class names to integer labels
 
         print(f"Found {len(self.image_paths)} images, {len(self.classes)} classes")
+
+        # cache images in memory if requested
+        self.cached_images = None
+        if self.cache:
+            print("Caching images in memory...")
+            self.cached_images = []
+            for img_path in self.image_paths:
+                image = Image.open(img_path).convert("RGB")
+                self.cached_images.append(image)
+            print("Caching complete!")
 
     def _get_class_name(self, path):
         # removing _s_XXX or _u_XXX suffix.
@@ -27,8 +38,14 @@ class PillDataset(Dataset):
         return len(self.image_paths)
 
     def __getitem__(self, idx):
+        # use cached image if available, otherwise load from disk
+        if self.cached_images is not None:
+            image = self.cached_images[idx].copy()  # copy to avoid modifying cached version
+        else:
+            img_path = self.image_paths[idx]
+            image = Image.open(img_path).convert("RGB")
+
         img_path = self.image_paths[idx]
-        image = Image.open(img_path).convert("RGB")
         class_name = self._get_class_name(img_path)
         label = self.class_to_idx[class_name]
 
