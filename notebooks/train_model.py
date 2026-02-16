@@ -5,6 +5,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
+from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.data import DataLoader
 
 import torchvision
@@ -23,7 +24,7 @@ VAL_DIR = DATA_DIR / "val" / "images"
 TEST_DIR = DATA_DIR / "test" / "images"
 
 BATCH_SIZE = 128  # optimal for RTX 4070 Super with this dataset
-NUM_EPOCHS = 25
+NUM_EPOCHS = 50
 LEARNING_RATE = 0.001
 NUM_CLASSES = 112 # dataset specific
 
@@ -38,7 +39,10 @@ print(f"Using device: {DEVICE}")
 train_transforms = transforms.Compose([
     transforms.Resize((IMG_SIZE, IMG_SIZE)),
     transforms.RandomHorizontalFlip(),
-    transforms.RandomRotation(10),
+    transforms.RandomVerticalFlip(p=0.3),
+    transforms.RandomRotation(15),
+    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),
+    transforms.RandomAffine(degrees=0, translate=(0.1, 0.1), scale=(0.9, 1.1)),
     transforms.ToTensor(),
     transforms.Normalize(
         mean=[0.485, 0.456, 0.406],
@@ -69,20 +73,30 @@ print(f"Train: {len(train_dataset)} | Val: {len(val_dataset)} | Test: {len(test_
 # USING RESNET50
 model = models.resnet50(weights=models.ResNet50_Weights.IMAGENET1K_V1)
 
-# freeze all layers (only train the final classifier (fc))
+# freeze all layers first
 for param in model.parameters():
     param.requires_grad = False
+
+# unfreeze layer4 (last ResNet block) for fine-tuning
+for param in model.layer4.parameters():
+    param.requires_grad = True
 
 # replace the final fully connected layer for our 112 classes
 # Linear(2048, 1000) -> Linear(2048, 112)
 model.fc = nn.Linear(model.fc.in_features, NUM_CLASSES)
 model = model.to(DEVICE)
 
-print(f"Model: ResNet50 with {NUM_CLASSES} output classes")
+print(f"Model: ResNet50 with {NUM_CLASSES} output classes (layer4 + fc unfrozen)")
 
-# loss function and optimizer
+# loss function and optimizer (train both layer4 and fc)
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.fc.parameters(), lr=LEARNING_RATE)  # fc layer
+optimizer = optim.Adam([
+    {'params': model.layer4.parameters(), 'lr': LEARNING_RATE * 0.1},  # lower LR for pretrained layer
+    {'params': model.fc.parameters(), 'lr': LEARNING_RATE}
+])
+
+# reduce LR when validation loss plateaus
+scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=5)
 
 def train_one_epoch(model, loader, criterion, optimizer, device):
     model.train()
@@ -150,6 +164,9 @@ for epoch in range(NUM_EPOCHS):
 
     print(f"Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}")
     print(f"Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}")
+
+    # step scheduler based on validation loss
+    scheduler.step(val_loss)
 
     train_loss_values.append(train_loss)
     val_loss_values.append(val_loss)
